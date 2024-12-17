@@ -14,3 +14,4 @@ data:
         service: http://kong-gateway-proxy.kong.svc.cluster.local
       - hostname: argo.neilvana.com
         service: http://argo-server.argo.svc.cluster.local
+      - service: http_status:503
