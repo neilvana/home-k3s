@@ -1,0 +1,6 @@
+apiVersion: v2
+name: "stoddinet"
+version: "0.1.0"
+description: "Top level ArgoCD application to install all other applications"
+appVersion: "0.1.0"
+type: application
