@@ -9,6 +9,7 @@ Install Ubuntu 24.04 server minimal on the nodes.
 On the first node (master):
 ```
 echo "net.core.rmem_max=2500000" | sudo tee -a /etc/sysctl.conf  # For cloudflared
+sudo apt-get install nfs-common
 curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--disable=traefik" sh -
 sudo cat /var/lib/rancher/k3s/server/node-token
 ```
@@ -40,10 +41,13 @@ cloudflared tunnel create stoddinet
 Install the tunnel credentials as a Kubernetes secret:
 
 ```bash
-kubectl create secret generic cloudflared-tunnel --from-file=credentials.json=<file show when creating tunnel>
+kubectl create namespace cloudflared
+kubectl create secret generic cloudflared-tunnel -n cloudflared --from-file=credentials.json=<file show when creating tunnel>
 ```
 
 ## Bootstrap ArgoCD Applications
 ```bash
 sudo kubectl apply -f bootstrap/application.yaml
 ```
+
+## Update public entries
