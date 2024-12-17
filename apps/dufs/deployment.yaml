@@ -1,0 +1,42 @@
+# This is the manifest for DUFS file server (https://github.com/sigoden/dufs).
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dufs
+  labels:
+    app: dufs
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: dufs
+  template:
+    metadata:
+      labels:
+        app: dufs
+    spec:
+      containers:
+        - name: dufs
+          image: sigoden/dufs:latest
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          args:
+            - -A
+            - /data
+          ports:
+            - containerPort: 5000
+              name: http
+              protocol: TCP
+          # Mount PVC to /data
+          volumeMounts:
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: dufs
