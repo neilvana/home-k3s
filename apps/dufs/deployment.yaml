@@ -27,7 +27,8 @@ spec:
               memory: 128Mi
           args:
             - -A
-            - --port 5000
+            - --port
+            - "5000"
             - /data
           ports:
             - containerPort: 5000
